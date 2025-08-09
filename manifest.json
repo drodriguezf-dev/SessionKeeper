@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "SessionKeeper",
+  "description": "Guarda tus pestañas y te permite restaurarlas al iniciar Chrome.",
+  "version": "1.0",
+  "permissions": [
+    "tabs",
+    "storage",
+    "notifications"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Guardar pestañas"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "save-tabs": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Guardar pestañas actuales"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
