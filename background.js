@@ -13,10 +13,16 @@ function notifyRestoreIfNeeded() {
           { title: "No" }
         ],
         priority: 2
+      }, (notifId) => {
+        setTimeout(() => {
+          chrome.notifications.clear(notifId);
+          chrome.storage.local.remove("pendingRestore");
+        }, 30000); // 30 segundos
       });
     }
   });
 }
+
 
 // Cuando Chrome se inicia desde cero
 chrome.runtime.onStartup.addListener(notifyRestoreIfNeeded);
