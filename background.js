@@ -26,15 +26,18 @@ chrome.windows.onCreated.addListener(notifyRestoreIfNeeded);
 
 chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
   if (notifId === "restoreTabsNotif") {
-    if (btnIdx === 0) { // Sí
+    if (btnIdx === 0) { // Sí - restaurar pestañas
       chrome.storage.local.get("savedTabs", (data) => {
         if (data.savedTabs) {
           data.savedTabs.forEach(url => chrome.tabs.create({ url }));
-          chrome.storage.local.remove("savedTabs");
+          // NO eliminar savedTabs aquí para mantener historial
         }
       });
+    } else if (btnIdx === 1) { // No - descartar historial guardado
+      chrome.storage.local.remove("savedTabs");
     }
     chrome.notifications.clear(notifId);
+    chrome.storage.local.remove("pendingRestore");
   }
 });
 
