@@ -1,4 +1,4 @@
-chrome.runtime.onStartup.addListener(() => {
+function notifyRestoreIfNeeded() {
   chrome.storage.local.get("savedTabs", (data) => {
     if (data.savedTabs && data.savedTabs.length > 0) {
       chrome.storage.local.set({ pendingRestore: true });
@@ -16,7 +16,13 @@ chrome.runtime.onStartup.addListener(() => {
       });
     }
   });
-});
+}
+
+// Cuando Chrome se inicia desde cero
+chrome.runtime.onStartup.addListener(notifyRestoreIfNeeded);
+
+// Cuando se abre una nueva ventana (por si Chrome estaba en segundo plano)
+chrome.windows.onCreated.addListener(notifyRestoreIfNeeded);
 
 chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
   if (notifId === "restoreTabsNotif") {
@@ -27,7 +33,6 @@ chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
           chrome.storage.local.remove("savedTabs");
         }
       });
-    } else {
     }
     chrome.notifications.clear(notifId);
   }
