@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "SessionKeeper",
   "description": "Guarda tus pestañas y te permite restaurarlas al iniciar Chrome.",
-  "version": "1.0",
+  "version": "2.0",
   "permissions": [
     "tabs",
     "storage",
